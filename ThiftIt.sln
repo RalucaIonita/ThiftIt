@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThiftIt", "ThiftIt\ThiftIt.csproj", "{3114F86B-CBFF-4800-8F16-0DE35A141799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BBA4AFCD-D6B0-466A-B8A1-AF2062F04794}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3114F86B-CBFF-4800-8F16-0DE35A141799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3114F86B-CBFF-4800-8F16-0DE35A141799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3114F86B-CBFF-4800-8F16-0DE35A141799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3114F86B-CBFF-4800-8F16-0DE35A141799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA4AFCD-D6B0-466A-B8A1-AF2062F04794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA4AFCD-D6B0-466A-B8A1-AF2062F04794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA4AFCD-D6B0-466A-B8A1-AF2062F04794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA4AFCD-D6B0-466A-B8A1-AF2062F04794}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43305A42-5E66-4F32-8559-7A5B2E4FBF6F}
+	EndGlobalSection
+EndGlobal
