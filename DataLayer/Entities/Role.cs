@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DataLayer.Entities
 {
-    public class User : IdentityUser<Guid>
+    public class Role : IdentityRole<Guid>
     {
-        public IList<Product> Products { get; set; }
     }
-
 }

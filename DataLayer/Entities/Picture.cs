@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataLayer.Entities
 {
-    public class Picture
+    public class Picture : BaseEntity
     {
         public string Body { get; set; }
         public string Title { get; set; }

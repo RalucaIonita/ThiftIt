@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThiftIt", "ThiftIt\ThiftIt.csproj", "{3114F86B-CBFF-4800-8F16-0DE35A141799}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThriftIt", "ThiftIt\ThriftIt.csproj", "{3114F86B-CBFF-4800-8F16-0DE35A141799}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{C96C5476-98FA-4C0D-AC6D-0A400FA59B16}"
 EndProject

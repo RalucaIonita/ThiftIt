@@ -1,17 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using DataLayer;
+using DataLayer.Entities;
+using DataLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Services;
+using Services.AutoMapperProfiles;
+using Swashbuckle.AspNetCore.Filters;
 
-namespace ThiftIt
+namespace ThriftIt
 {
     public class Startup
     {
@@ -26,7 +29,77 @@ namespace ThiftIt
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+
+            services.AddMvc();
+            services.AddSingleton(Configuration);
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders();
+
+            services.AddCors(options => options
+                .AddPolicy("AllowAll", p =>
+                    p.AllowAnyMethod().AllowAnyHeader()
+                        .AllowAnyOrigin()));
+
+            AddSwagger(services);
+            AddOtherStuff(services);
+            AddRepositories(services);
+            AddServices(services);
         }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                    // Name = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    // Scheme = JwtBearerDefaults.AuthenticationScheme
+                });
+                // options.OperationFilter<AddAuthHeaderOperationFilter>();
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+
+        }
+
+
+        private void AddOtherStuff(IServiceCollection services)
+        {
+            services.AddScoped<UserManager<User>>();
+            services.AddScoped<SignInManager<User>>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                // mc.AddProfile(new CustomMapperProfile());
+                mc.AddProfile(new GenericProfile());
+            });
+
+            services.AddSingleton(mapperConfig.CreateMapper());
+        }
+
+        private void AddRepositories(IServiceCollection services)
+        {
+            services.AddScoped<IProductRepository, ProductRepository>();
+        }
+
+        private void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+        }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,16 +109,29 @@ namespace ThiftIt
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseCors("AllowAll");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                // endpoints.MapHub<NotificationsHub>("/NotificationHub");
             });
+            //account.CreateAdminAccount().Wait();
+
         }
     }
 }
