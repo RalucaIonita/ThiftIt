@@ -4,14 +4,16 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210119022922_smth")]
+    partial class smth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,22 +145,6 @@ namespace DataLayer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5532cbac-4dc4-44de-bc69-d45a9d590a83"),
-                            ConcurrencyStamp = "d81b5c56-ea32-42db-a6a3-58b098ba7e43",
-                            Name = "BasicUser",
-                            NormalizedName = "BASICUSER"
-                        },
-                        new
-                        {
-                            Id = new Guid("192753ea-e6ab-40a2-a0bb-a0748a35eb48"),
-                            ConcurrencyStamp = "aa5536ab-e4a7-48b0-9dc6-ab7f91b39201",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SUPERADMIN"
-                        });
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Transaction", b =>

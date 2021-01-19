@@ -40,7 +40,7 @@ namespace DataLayer
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            //builder.Entity<Role>().HasData(CustomRoles.BasicUser, CustomRoles.SuperAdmin);
+            builder.Entity<Role>().HasData(CustomRoles.BasicUser, CustomRoles.SuperAdmin);
         }
 
 
