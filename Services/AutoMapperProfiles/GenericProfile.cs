@@ -10,6 +10,14 @@ namespace Services.AutoMapperProfiles
         {
             CreateMap<UserDto, User>().ForMember(d => d.UserName, s => s.MapFrom(x => x.Email));
             CreateMap<User, UserDto>();
+
+            CreateMap<Product, ProductDto>()
+                .ForMember(p => p.SellerName,
+                x => x.MapFrom(e => (e.Seller.FirstName + " " + e.Seller.LastName)))
+                .ForMember(p => p.SellerEmail, 
+                    x => x.MapFrom(e => e.Seller.Email))
+                .ForMember(p => p.SellerPhoneNumber, 
+                    x => x.MapFrom(e => e.Seller.PhoneNumber));
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DataLayer.Entities
         public ProductType Type { get; set; }
         public bool Sold { get; set; }
         public float Price { get; set; }
-        public bool Reserved { get; set; }
+        public bool IsReserved { get; set; }
+        public IList<Picture> Pictures { get; set; }
     }
 }
