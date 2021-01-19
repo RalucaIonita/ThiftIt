@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DataLayer.Entities;
 
 namespace DataLayer.Repositories
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepositoryBase<Product>
     {
 
     }
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
+        public ProductRepository(Context db) : base(db)
+        {
+        }
     }
 }

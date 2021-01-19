@@ -4,14 +4,16 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210119010314_CartModel")]
+    partial class CartModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,9 +90,6 @@ namespace DataLayer.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<bool>("Reserved")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -142,15 +141,15 @@ namespace DataLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("11dd2219-90d0-4c59-b484-9fc86d6ba515"),
-                            ConcurrencyStamp = "18fec9de-20e6-4ec4-a415-d90628bd3cd0",
+                            Id = new Guid("c916942b-a206-4bfd-9357-06d329e30fe4"),
+                            ConcurrencyStamp = "3e34513b-f0cd-47ff-a65c-8cff2c4a64a0",
                             Name = "BasicUser",
                             NormalizedName = "BASICUSER"
                         },
                         new
                         {
-                            Id = new Guid("ebdde7c8-13bd-44bb-8f52-fcd54abafe46"),
-                            ConcurrencyStamp = "595c5875-2979-43f9-851a-b0d1cd9153ee",
+                            Id = new Guid("cb130b5c-3853-4c3d-9c0b-e0050ff041a9"),
+                            ConcurrencyStamp = "53c58ae0-0804-4e7e-bebb-30777b7b53c1",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         });

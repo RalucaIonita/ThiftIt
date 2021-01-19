@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repositories
 {
@@ -11,5 +12,8 @@ namespace DataLayer.Repositories
     }
     public class PictureRepository : RepositoryBase<Picture>, IPictureRepository
     {
+        public PictureRepository(Context db) : base(db)
+        {
+        }
     }
 }

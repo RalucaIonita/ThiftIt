@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using DataLayer.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using DataLayer.Entities;
 using Services;
-using ThriftIt.Dtos;
+using Services.Dtos;
+using System.Threading.Tasks;
+using ThriftIt.Helpers;
 
-namespace WebApi.Controllers
+namespace ThriftIt.Controllers
 {
     [ApiController]
     [Route("api/account")]
@@ -48,7 +49,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("login")]
-        public async Task<ActionResult<TokenResponse>> Login([FromBody] LoginDto payload)
+        public async Task<IActionResult> Login([FromBody] LoginDto payload)
         {
             if (payload.Password == null || payload.Password == null)
                 return BadRequest("Bad data, bro.");
@@ -64,9 +65,8 @@ namespace WebApi.Controllers
                 return BadRequest("Impostors shall burn in hell.");
         }
 
-
         [HttpGet("Token/Valid")]
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = "BasicUser")]
         public ActionResult CheckIfStillValid()
         {
             return Ok("Yep, still valid.");

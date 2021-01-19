@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DataLayer.Entities;
+using Services.Dtos;
 
 namespace Services.AutoMapperProfiles
 {
@@ -9,8 +8,8 @@ namespace Services.AutoMapperProfiles
     {
         public GenericProfile()
         {
-            // CreateMap<Notification, NotificationDto>().ReverseMap();
-            //CreateMap<Vice, ViceDto>().ReverseMap();
+            CreateMap<UserDto, User>().ForMember(d => d.UserName, s => s.MapFrom(x => x.Email));
+            CreateMap<User, UserDto>();
         }
     }
 }

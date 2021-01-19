@@ -24,6 +24,7 @@ namespace DataLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,7 +39,8 @@ namespace DataLayer
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-            builder.Entity<Role>().HasData(new Role { Id = Guid.NewGuid(), Name = "Seller", NormalizedName = "SELLER"}, new Role { Id = Guid.NewGuid(), Name = "Buyer", NormalizedName = "BUYER" });
+
+            //builder.Entity<Role>().HasData(CustomRoles.BasicUser, CustomRoles.SuperAdmin);
         }
 
 

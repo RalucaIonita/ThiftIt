@@ -25,10 +25,10 @@ namespace DataLayer.Repositories
 
     public class RepositoryBase<T> : IDisposable, IRepositoryBase<T> where T : BaseEntity
     {
-        private readonly DbContext _db;
+        private readonly Context _db;
         private readonly DbSet<T> _dbSet;
 
-        protected RepositoryBase(DbContext db)
+        public RepositoryBase(Context db)
         {
             _db = db;
             _dbSet = db.Set<T>();

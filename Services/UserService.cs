@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
-using DataLayer.Entities;
-using DataLayer.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace Services
 {
@@ -30,6 +26,8 @@ namespace Services
         public async Task<(string email, string AccessToken)> LoginAsync(string email, string password)
         {
             var user = await GetUserByEmailAsync(email);
+            if (user == null)
+                return (null, null);
             var result = await UnitOfWork.Users.PasswordSignInAsync(email, password);
             if (result.Succeeded)
             {
@@ -51,13 +49,13 @@ namespace Services
                 await UnitOfWork.Users.AddClaimAsync(user, new Claim(ClaimTypes.NameIdentifier, user.UserName));
                 await UnitOfWork.Users.AddClaimAsync(user, new Claim(ClaimTypes.Name, user.FirstName));
                 await UnitOfWork.Users.AddClaimAsync(user, new Claim(ClaimTypes.Surname, user.LastName));
-                await UnitOfWork.Users.AddClaimAsync(user, new Claim(ClaimTypes.SerialNumber, user.Id));
-                var roleExists = await _roleManager.RoleExistsAsync(Role.User); // check role from db
+                await UnitOfWork.Users.AddClaimAsync(user, new Claim(ClaimTypes.SerialNumber, user.Id.ToString()));
+                var roleExists = await _roleManager.RoleExistsAsync(CustomRoles.BasicUser.Name);
                 if (!roleExists)
                 {
-                    await _roleManager.CreateAsync(new Role { Name = Role.User });
+                    await _roleManager.CreateAsync(new Role { Name = CustomRoles.BasicUser.Name });
                 }
-                await UnitOfWork.Users.AddToRoleAsync(user, Role.User);
+                await UnitOfWork.Users.AddToRoleAsync(user, CustomRoles.BasicUser.Name);
             }
             await UnitOfWork.SaveChangesAsync();
             return result;

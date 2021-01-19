@@ -1,16 +1,14 @@
-﻿using DataLayer;
-using DataLayer.Entities;
-using DataLayer.Repositories;
+﻿using DataLayer.Repositories;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
-namespace Services
+namespace DataLayer
 {
     public interface IUnitOfWork
     {
         Context Context { get; }
         IProductRepository Products { get; }
         IUserRepository Users { get; set; }
+        ICartRepository Carts { get; set; }
 
         Task<bool> SaveChangesAsync();
 
@@ -21,6 +19,7 @@ namespace Services
 
         public IProductRepository Products { get; set; }
         public IUserRepository Users { get; set; }
+        public ICartRepository Carts { get; set; }
 
         public async Task<bool> SaveChangesAsync()
         {
@@ -28,11 +27,15 @@ namespace Services
         }
 
 
-        public UnitOfWork(Context context, IProductRepository productRepository,IUserRepository userRepository)
+        public UnitOfWork(Context context, 
+            IProductRepository productRepository,
+            IUserRepository userRepository,
+            ICartRepository cartRepository)
         {
             Context = context;
             Products = productRepository;
             Users = userRepository;
+            Carts = cartRepository;
         }
 
 
