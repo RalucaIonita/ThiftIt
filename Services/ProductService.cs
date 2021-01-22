@@ -13,6 +13,9 @@ namespace Services
     {
         Task<List<ProductDto>> GetAllProductsAsync();
         Task<bool> AddProductAsync(Guid userId, CreateProductDto payload);
+        Task<Product> GetProductByIdAsync(Guid productId);
+        Task UpdateProductAsync(Guid productId, CreateProductDto payload);
+        Task DeleteProductAsync(Guid productId);
     }
     public class ProductService : BaseService, IProductService
     {
@@ -26,7 +29,6 @@ namespace Services
         public async Task<bool> AddProductAsync(Guid userId, CreateProductDto payload)
         {
             var pictures = new List<Picture>();
-
             var product = new Product
             {
                 Description = payload.Description,
@@ -34,22 +36,29 @@ namespace Services
                 Title = payload.Title,
             };
 
-            payload.PictureBodies.ForEach(x => pictures.Add(new Picture
+            var picture = new Picture
             {
-                Body = x,
+                Body = payload.Picture,
                 ProductId = product.Id,
                 Url = "idk, ma mai gandesc",
                 Title = product.Title + Guid.NewGuid()
-            }));
+            };
 
             var user = await UnitOfWork.Users.GetUserByIdAsync(userId);
             if (user == null)
                 return false;
-            product.Pictures = pictures;
+            product.Picture = picture;
             product.Seller = user;
 
             UnitOfWork.Products.Insert(product);
             return await UnitOfWork.SaveChangesAsync();
+        }
+
+        public async Task DeleteProductAsync(Guid productId)
+        {
+            var product = await UnitOfWork.Products.GetByIdAsync(productId);
+            UnitOfWork.Products.Remove(product);
+            await UnitOfWork.SaveChangesAsync();
         }
 
         public async Task<List<ProductDto>> GetAllProductsAsync()
@@ -59,6 +68,20 @@ namespace Services
             products.ForEach(x => dtos.Add(_mapper.Map<Product, ProductDto>(x)));
 
             return dtos;
+        }
+
+        public async Task<Product> GetProductByIdAsync(Guid productId)
+        {
+            return await UnitOfWork.Products.GetByIdAsync(productId);
+        }
+
+        public async Task UpdateProductAsync(Guid productId, CreateProductDto payload)
+        {
+            var product = await UnitOfWork.Products.GetByIdAsync(productId);
+            _mapper.Map(payload, product);
+
+            UnitOfWork.Products.Update(product);
+            await UnitOfWork.SaveChangesAsync();
         }
     }
 }

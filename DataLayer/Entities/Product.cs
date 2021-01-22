@@ -15,6 +15,6 @@ namespace DataLayer.Entities
         public bool Sold { get; set; }
         public float Price { get; set; }
         public bool IsReserved { get; set; }
-        public IList<Picture> Pictures { get; set; }
+        public Picture Picture { get; set; }
     }
 }

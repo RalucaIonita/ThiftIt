@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,7 @@ namespace DataLayer.Repositories
 {
     public interface ICartRepository : IRepositoryBase<Cart>
     {
-        Cart GetUserCart(Guid userId);
+        Task<Cart> GetUserCartAsync(Guid userId);
 
     }
     public class CartRepository : RepositoryBase<Cart>, ICartRepository
@@ -18,9 +19,9 @@ namespace DataLayer.Repositories
         {
         }
 
-        public Cart GetUserCart(Guid userId)
+        public async Task<Cart> GetUserCartAsync(Guid userId)
         {
-            return GetRecords().Include(c => c.Products).FirstOrDefault(c => c.UserId == userId);
+            return await GetRecords().Include(c => c.Products).FirstOrDefaultAsync(c => c.UserId == userId);
         }
     }
 }

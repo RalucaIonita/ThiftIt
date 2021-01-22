@@ -18,6 +18,10 @@ namespace Services.AutoMapperProfiles
                     x => x.MapFrom(e => e.Seller.Email))
                 .ForMember(p => p.SellerPhoneNumber, 
                     x => x.MapFrom(e => e.Seller.PhoneNumber));
+            CreateMap<ProductDto, Product>();
+
+            CreateMap<Cart, CartDto>();
+            CreateMap<CartDto, Cart>();
         }
     }
 }

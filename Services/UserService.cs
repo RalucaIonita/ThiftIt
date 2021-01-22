@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿using System;
+using DataLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Services
         Task<IdentityResult> RegisterAccountAsync(User user, string password);
         Task<(string email, string AccessToken)> LoginAsync(string email, string password);
         Task<bool> EmailExistsAsync(string email);
+        Task<User> GetUserByIdAsync(Guid userId);
     }
     public class UserService : BaseService, IUserService
     {
@@ -70,6 +72,11 @@ namespace Services
         private async Task<User> GetUserByEmailAsync(string email)
         {
             return await UnitOfWork.Users.GetUserByEmail(email);
+        }
+
+        public async Task<User> GetUserByIdAsync(Guid userId)
+        {
+            return await UnitOfWork.Users.GetUserByIdAsync(userId);
         }
     }
 }
